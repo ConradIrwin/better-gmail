@@ -5,24 +5,47 @@
 				
 		if (response.o.ads) {
 	
-			css += "div[class='u5'] {display:none} div[class='nH u8'] {display:none}";
+css = "div[class='u5'] {display:none} div[class='nH u8'] {display:none}";
 			
-			css += ".iY .Bu:last-child > .nH {height: 0px !important;	overflow: hidden !important;	width: 0px !important;}.iY .Bu:first-child + .Bu {display: none !important;}.iY {width: 100% !important;}";
 			
-			css+=".iY .Bu:last-child .nH > .nH > .nH:first-child {position: absolute !important;right: 0!important;top: 5px !important;	font-size: 70% !important;}";
-			
-			css+=".iY .Bu:last-child .hj {font-size: 100% !important;	margin: 0 auto !important;	float: right !important;	padding: 5px 8px 0px !important;	border-style: solid !important;	border-width: 0px !important;	border-bottom-width: 0px !important;position: relative;}.iY .Bu:last-child .hj:hover {	z-index: 2 !important;}";
-			
-			css+=".hk {	float: left !important;	padding: 0 !important;}.hk span {	display: block !important;	width: auto !important;	height: 1.8em !important;	line-height: 1.8em !important;	padding: 0 8px !important;	/*border: 1px solid #BBBBBB ;	border-left-color: #FFFFFF !important*/}.hk:first-child span {	border-left-color: #BBBBBB !important;}.hk u {	text-decoration: none !important;}.hk img {	margin-bottom: 2px !important;}.hk span:hover {	border-top-color: #939393 !important;	border-bottom-color: #939393 !important;}";
-						
-			css+= "h1.ha {/*max-width:650px;*/ overflow:hidden;}";// limit width of title so it wont over run new window link
-			css+= "h1.ha span.hP {max-width:600px; float:left; display:block}";
-			css+= "div.ii.gt > div {max-width:700px !important;}";// limit width of message
-			css+= ".hj{background:none !important}"; //hide the bg of the newwindow link in ninja theme
-			
-			css += "div[class='MI'] {display:none}"; //hide new ads system on the bottom of email
-			css += "div.nH.MC, div.z0DeRc { display: none !important; }";//hide bottom ads
-			css += "div.hQfrn, .OH0apf { display: none !important; }";
+css += ".iY .Bu:last-child > .nH {height: 0px !important;	overflow: hidden !important;	width: 0px !important;}.iY .Bu:first-child + .Bu {display: none !important;}.iY {width: 100% !important;}";
+
+css+=".iY .Bu:last-child .nH > .nH > .nH:first-child {position: absolute !important;right: 0!important;top: 5px !important;	font-size: 70% !important;}";
+
+css+=".iY .Bu:last-child .hj {font-size: 100% !important;	margin: 0 auto !important;	float: right !important;	padding: 5px 8px 0px !important;	border-style: solid !important;	border-width: 0px !important;	border-bottom-width: 0px !important;position: relative;}.iY .Bu:last-child .hj:hover {	z-index: 2 !important;}";
+
+css+=".hk {	float: left !important;	padding: 0 !important;}.hk span {	display: block !important;	width: auto !important;	height: 1.8em !important;	line-height: 1.8em !important;	padding: 0 8px !important;	/*border: 1px solid #BBBBBB ;	border-left-color: #FFFFFF !important*/}.hk:first-child span {	border-left-color: #BBBBBB !important;}.hk u {	text-decoration: none !important;}.hk img {	margin-bottom: 2px !important;}.hk span:hover {	border-top-color: #939393 !important;	border-bottom-color: #939393 !important;}";
+
+css+= "h1.ha {max-width:650px; overflow:hidden;}";// limit width of title so it wont over run new window link
+css+= "div.ii.gt > div {max-width:700px !important;}";// limit width of message	
+	
+css+= "h1.ha {overflow:hidden;}";// limit width of title so it wont over run new window link
+css+= "h1.ha span.hP {max-width:600px; float:left; display:block}";
+css+= "div.ii.gt > div {max-width:700px !important;}";// limit width of message
+css+= ".hj{background:none !important}"; //hide the bg of the newwindow link in ninja theme
+
+css += "div[class='MI'] {display:none}"; //hide new ads system on the bottom of email
+css += "div.nH.MC, div.z0DeRc { display: none !important; }";//hide bottom ads
+css += "div.hQfrn, .OH0apf { display: none !important; }";	
+	
+//			css += "div[class='u5'] {display:none} div[class='nH u8'] {display:none}";
+//			
+//			css += ".iY .Bu:last-child > .nH {height: 0px !important;	overflow: hidden !important;	width: 0px !important;}.iY .Bu:first-child + .Bu {display: none !important;}.iY {width: 100% !important;}";
+//			
+//			css+=".iY .Bu:last-child .nH > .nH > .nH:first-child {position: absolute !important;right: 0!important;top: 5px !important;	font-size: 70% !important;}";
+//			
+//			css+=".iY .Bu:last-child .hj {font-size: 100% !important;	margin: 0 auto !important;	float: right !important;	padding: 5px 8px 0px !important;	border-style: solid !important;	border-width: 0px !important;	border-bottom-width: 0px !important;position: relative;}.iY .Bu:last-child .hj:hover {	z-index: 2 !important;}";
+//			
+//			css+=".hk {	float: left !important;	padding: 0 !important;}.hk span {	display: block !important;	width: auto !important;	height: 1.8em !important;	line-height: 1.8em !important;	padding: 0 8px !important;	/*border: 1px solid #BBBBBB ;	border-left-color: #FFFFFF !important*/}.hk:first-child span {	border-left-color: #BBBBBB !important;}.hk u {	text-decoration: none !important;}.hk img {	margin-bottom: 2px !important;}.hk span:hover {	border-top-color: #939393 !important;	border-bottom-color: #939393 !important;}";
+//						
+//			css+= "h1.ha {/*max-width:650px;*/ overflow:hidden;}";// limit width of title so it wont over run new window link
+//			css+= "h1.ha span.hP {max-width:600px; float:left; display:block}";
+//			css+= "div.ii.gt > div {max-width:700px !important;}";// limit width of message
+//			css+= ".hj{background:none !important}"; //hide the bg of the newwindow link in ninja theme
+//			
+//			css += "div[class='MI'] {display:none}"; //hide new ads system on the bottom of email
+//			css += "div.nH.MC, div.z0DeRc { display: none !important; }";//hide bottom ads
+//			css += "div.hQfrn, .OH0apf { display: none !important; }";
 		}
 	
 		if (response.o.chat) {
@@ -152,7 +175,84 @@
 		}
 		
 		// relocating contacts and tasks
-			
+		var total = 0;
+		var interval = 250;
+		var max = 15000;
+		function init() {
+
+		var el = document.body.getElementsByTagName('b');
+		if (el && el.length && (el[0].innerHTML == 'Gmail' || el[0].innerHTML == 'Mail' || el[0].innerHTML == 'Google Mail' || el[0].innerHTML == 'E-Mail')) {
+				
+				if(response.o.contact){
+					alert('dude');
+				
+					header = document.body.getElementsByTagName('nobr');
+					contactLink = document.createElement('a');
+					contactLink.setAttribute('class','e');
+					contactLink.setAttribute('id','sp_contact');
+					
+//					$("div#\\:rm").click(function(){
+//						$("#sp_contact").text("Contacts");	
+//					});
+					
+//					cm =document.body.getElementsByClassName('.cM')[0];
+//					if(cm){
+//						contactLink.appendChild(document.createTextNode('Mail'));
+//					}else{
+//						contactLink.appendChild(document.createTextNode('Contacts'));
+//					}
+					var hash = location.hash;
+					if(hash.indexOf('contacts')!=-1){contactLink.appendChild(document.createTextNode('Mail'));}
+					else{contactLink.appendChild(document.createTextNode('Contacts'));}
+					contactLink.addEventListener('click', function() {
+						
+						var evt = document.createEvent("MouseEvents");
+						evt.initMouseEvent("click", true, true, window,
+						0, 0, 0, 0, 0, false, false, false, false, 0, null);
+						
+						if($(".cM").length){
+							$("#sp_contact").text('Contacts');
+							if($(".is").length){
+								$(".is")[0].dispatchEvent(evt);
+							}
+							//window.location="https://mail.google.com/mail/u/0/?shva=1#inbox";
+						}else{
+							$("#sp_contact").text('Mail');
+							var iel = $('div.CX.pp div.z9.ou')[0];
+							var ipa = $('div.qk span.p9.ou#\\:rd')[0];
+							var iop = $('div.qk span#\\:rf')[0];	
+							if(iel){iel.dispatchEvent(evt);}
+							else if(ipa){ipa.dispatchEvent(evt);}
+							else if(iop){iop.dispatchEvent(evt);}
+						}
+					},true);
+		
+					taskLink = document.createElement('a');
+					taskLink.setAttribute('class','e');
+					taskLink.setAttribute('id','sp_task');				
+					taskLink.appendChild(document.createTextNode('Tasks'));
+					taskLink.addEventListener('click', function() {
+						var evt = document.createEvent("MouseEvents");
+						evt.initMouseEvent("click", true, true, window,
+						0, 0, 0, 0, 0, false, false, false, false, 0, null);
+						var el = $('div.T4.pp div.T3')[0];
+						var pa = $('div.qk span#\\:re')[0];
+						if(el){el.dispatchEvent(evt);}
+						else if(pa){pa.dispatchEvent(evt);}
+					},true);
+					
+					header[1].insertBefore(document.createTextNode(' | '),header[1].firstChild);
+					header[1].insertBefore(contactLink,header[1].firstChild);
+					header[1].insertBefore(document.createTextNode(' | '),header[1].firstChild);
+					header[1].insertBefore(taskLink,header[1].firstChild);
+				}
+		
+		   } else {
+			   // try again in 250 more milliseconds (or whatever you set "interval" to above)
+			  window.setTimeout(init,interval);
+		   }
+		};
+		init();		
 	
 	});//end chrome extension request
 })();
