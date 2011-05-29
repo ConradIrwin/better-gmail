@@ -1,0 +1,10 @@
+/*div.J-J5-Ji > div.AP, div.AO {display:inline-block;position:relative;-moz-border-radius:3px 3px 3px 3px;border-radius:3px 3px;background:-moz-linear-gradient(center top,#F9F9F9,#E3E3E3);background:-webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));border:1px solid #BBB;border-top:1px solid #CCC;border-bottom:1px solid #A0A0A0;color:#000;cursor:default;font:75% arial,sans-serif;outline:medium none;padding:3px 8px;text-align:center;vertical-align:middle;white-space:nowrap;-webkit-user-select:none;text-decoration:none;margin-bottom:2px; margin-left:0; float:none !important;margin-right:8px}
+*/div.J-J5-Ji > div.AP, div.AO {text-decoration:none;}
+						
+/*div.J-J5-Ji > div.AP:hover, div.AO:hover{border-top:1px solid #939393;border-left:1px solid #939393;border-right:1px solid #939393;}
+div.J-J5-Ji > div.AP:active, div.J-J5-Ji > div.AP:focus, div.AO:active, div.AO:focus{background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#E3E3E3), to(#F9F9F9));}
+*/
+div.h0 > span.e{text-decoration:none}/*next - previous button without text underline*/
+span.Di > span.e{text-decoration:none}/*next - previous button without text underline (home page)*/
+			
+

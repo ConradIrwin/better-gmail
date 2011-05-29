@@ -1,0 +1,178 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+body {
+	margin: 0px;
+	padding: 0px;
+/*	background-color: #fafcff;
+*/	overflow-y: hidden;
+	?max-width: 100%;
+}
+body, td, input, select, textarea, button {
+/*	color: hsl(216, 30%, 30%);
+*/	font-family: arial,sans-serif;
+	font-size: 11px;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+a {
+	text-decoration: none;
+	color: hsl(216, 30%, 30%);
+}
+a:hover {
+	text-decoration: underline;
+}
+#header {
+	vertical-align: middle;
+	padding: 2px 2px 0 5px;
+}
+#header * {
+	vertical-align: middle;
+}
+#options {
+	?float: right;
+	position: absolute;
+	right: 0px;
+	font-size: 80%;
+	padding-top: 2px;
+	opacity: 0;
+}
+#header:hover #options {
+	opacity: 0.7;
+}
+#options:hover {
+	opacity: 1 !important;
+}
+#options.windows {
+	margin-right: 30px;
+}
+#body {
+	padding: 5px 6px;
+	?overflow-y: hidden;
+}
+#website{
+	color:#00681C;
+	font-weight:bold
+}
+#content {
+	line-height: 145%;
+}
+#content * {
+	width: auto !important;
+}
+#content img, #content object, #content embed, #content iframe {
+	display: none;
+}
+#content a {
+	?text-decoration: underline;
+}
+.link {
+	cursor: pointer;
+}
+.link:hover {
+	text-decoration: underline;
+}
+.hidden {
+	display: none;
+}
+.hid {
+	visibility:hidden	
+}
+.b {
+	font-weight:bold;	
+}
+</style>
+<script type="application/javascript">
+if (localStorage['message']!= null && localStorage['message'] == "true") {
+    var itemURL
+	var inbox;
+	var id;
+    function $() {
+        return document.getElementById.apply(document, arguments);
+    }
+
+    function init() {
+
+        var params = getQueryParams();
+
+        itemURL = params["itemURL"];
+		id = itemURL.split('message_id=')[1].split('&view')[0];
+		inbox = 'https://mail.google.com/mail/u/0/?shva=1#inbox/' + id;
+		
+        $("website").innerText = params["websiteName"] || "";
+
+        $("title").innerHTML = params["itemTitle"] || "";
+		//$("title").setAttribute('attr', inbox);
+        $("content").innerHTML = params["itemContent"] || "";
+		
+        var temp = $("mainTable").innerHTML;
+        $("mainTable").innerHTML = "";
+        setTimeout(function () {
+            $("mainTable").innerHTML = temp;
+        }, 50);
+    }
+
+    function getQueryParams() {
+        var query = document.location.search || "";
+        if (query.indexOf("?") == 0) query = query.substring(1);
+		
+        query = query.split("&");
+
+        var params = [];
+        for (i in query) {
+            var pair = query[i].split("=");
+            params[pair[0]] = decodeURIComponent(pair[1]);
+        }
+        return params;
+    }
+
+    function openItemPage() {
+        openURL(inbox);
+        
+    }
+
+    function openURL(url) {
+		chrome.tabs.getAllInWindow(null,function(tabs){
+			for (var i=0;i<tabs.length;i++){
+				var t = tabs[i].url;
+				if (t.match('mail.google.com')) {
+					chrome.tabs.update(tabs[i].id, {selected:true, url:url});
+					close();
+					return;
+				}
+			}
+			chrome.tabs.create({url: url})
+			close();
+		});
+		
+    }
+}
+</script>
+</head>
+<body onload="init()" >
+	<table id="mainTable">
+		<tr>
+			<td id="header">
+				<span style="color:#888888">From: </span>
+				<span id="website">
+					Sender
+				</span>
+				<div style="padding-top:3px"></div>
+				<span id="title" class="link b" onclick="openItemPage()">
+					Subject
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td id="body">
+				<div id="content">
+					Content
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

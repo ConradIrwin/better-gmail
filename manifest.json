@@ -1,0 +1,25 @@
+{
+   "background_page": "background.html",
+   "content_scripts": [ {
+      "css": [ "default.css" ],
+      "js": [ "script.js", "jquery.js" ],
+      "matches": [ "http://mail.google.com/*", "https://mail.google.com/*" ]
+   }, {
+      "all_frames": true,
+      "js": [ "mailto.js" ],
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ],
+   "converted_from_user_script": true,
+   "description": "Options: Clean up user interface (remove ads, footer...) - Make Gmail default email application - Add Gmail desktop notification",
+   "icons": {
+      "128": "icon/icon128.png",
+      "16": "icon/icon16.png",
+      "48": "icon/icon48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCyeMaZCdhbk+a6Wpa6boJLf0T/EEt1LNutkrIvwMhgoWtL5tWA3Qbs/IrNqp0p8x6/Xg0cdle46j0q7kiyxfTkh6w0NBjO658UoYTlC3IGk3IChAbUr+L8iOXC6dD1mI9OjxW2beuDnLbTSVwmjN+yQdze4P7ttKONyQ7GwW9CiQIDAQAB",
+   "name": "Better Gmail",
+   "options_page": "options.html",
+   "permissions": [ "tabs", "http://*.google.com/", "https://*.google.com/", "notifications" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "2.6.42"
+}

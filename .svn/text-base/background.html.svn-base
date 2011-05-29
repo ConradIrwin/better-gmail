@@ -1,0 +1,266 @@
+<html>
+<head>
+<script>
+//open option page automatically
+version = 2679;
+if (localStorage["version"] == undefined) {
+    localStorage["version"] = 0;
+}
+if (localStorage["version"] < version) {
+    chrome.tabs.create({
+        url: chrome.extension.getURL("options.html")
+    });
+    localStorage["version"] = version;
+}
+
+// seek request and send response to content scripts
+chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
+    if (request.reqtype == 'o') {
+        sendResponse({
+            'o': JSON.parse(localStorage['options'])
+        });
+    }
+	if (request.action == "reload"){ reloadTab();}
+});
+function reloadTab() {
+	chrome.windows.getCurrent(function(win) {
+		var cwin = win.id;
+		chrome.tabs.getAllInWindow(cwin, function(tabs) {
+			for (var i = 0; i < tabs.length; i++) {
+				var t = tabs[i].url;
+				if (t.match('mail.google.com')) {
+					var tab = tabs[i];
+					chrome.tabs.update(tab.id, {url: tab.url, selected: tab.selected}, null);
+				}
+			}
+		});
+	});
+}
+
+// Notification
+var pollIntervalMin = 1000 * 15;  // 1 minute
+var pollIntervalMax = 1000 * 60 * 60;  // 1 hour
+var requestFailureCount = 0;  // used for exponential backoff
+var requestTimeout = 1000 * 2;  // 5 seconds
+var unreadCount = -1;
+
+var lastMessageTime;
+
+function getGmailUrl() {
+    var url = "https://mail.google.com/mail/";
+    return url;
+}
+
+function getFeedUrl() {
+    return getGmailUrl() + "feed/atom";
+}
+
+function isGmailUrl(url) {
+    // This is the Gmail we're looking for if:
+    // - starts with the correct gmail url
+    // - doesn't contain any other path chars
+    var gmail = getGmailUrl();
+    if (url.indexOf(gmail) != 0) return false;
+
+    return url.length == gmail.length || url[gmail.length] == '?' || url[gmail.length] == '#';
+}
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+  if (changeInfo.url && isGmailUrl(changeInfo.url)) {
+    getInboxCount(function(count) {
+      updateUnreadCount(count);
+    });
+  }
+});
+
+
+function init() {
+    startRequest();
+}
+
+function scheduleRequest() {
+  var randomness = Math.random() * 2;
+  var exponent = Math.pow(2, requestFailureCount);
+  var delay = Math.min(randomness * pollIntervalMin * exponent,
+                       pollIntervalMax);
+  delay = Math.round(delay);
+
+  window.setTimeout(startRequest, delay);
+}
+
+// ajax stuff
+
+
+function startRequest() {
+    getInboxCount(
+
+    function (count, items) {
+		updateUnreadCount(count);
+        scheduleRequest();
+
+        if (typeof webkitNotifications != "undefined" && localStorage['message']!= null && localStorage['message'] == "true") {
+            var item;
+            var newestItemTime = lastMessageTime || 0;
+            while (item = items.iterateNext()) {
+                var time = item.querySelector("modified").textContent;
+                time = Date.parse(time.replace("T24", " 00").replace("T", " ").replace("Z", ""));
+                if (lastMessageTime && time <= lastMessageTime) continue;
+
+                if (time > newestItemTime) newestItemTime = time;
+
+                var title = item.querySelector("title").textContent;
+                var summary = item.querySelector("summary").textContent;
+                var authorName = item.querySelector("author name").textContent;
+                var link = item.querySelector("link").getAttribute("href");
+                var content = summary;
+
+                var item = {
+                    websiteName: authorName,
+                    websiteURL: undefined,
+                    itemURL: link,
+                    itemTitle: title,
+                    itemContent: content
+                };
+                var notifyPageURL = getNotificationURL(item);
+                var notification = webkitNotifications.createHTMLNotification(notifyPageURL);
+                var timeout = parseInt(localStorage['timeout'], 10);
+                if (isNaN(timeout)) timeout = 60;
+
+                notification.show();
+                if (localStorage['sound']!= null & localStorage['sound'] == "true") playNotificationSound();
+
+                setTimeout(function () {
+                    notification.cancel();
+                }, timeout * 1000);
+
+                if (!lastMessageTime)
+				break;
+            }
+            lastMessageTime = newestItemTime;
+        }
+    }, function () {
+        scheduleRequest();
+    });
+}
+
+function getInboxCount(onSuccess, onError) {
+	var xhr = new XMLHttpRequest();
+	var abortTimerId = window.setTimeout(function() {
+		xhr.abort();  // synchronously calls onreadystatechange
+	}, requestTimeout);
+	
+	function handleSuccess(count, items) {
+		requestFailureCount = 0;
+		window.clearTimeout(abortTimerId);
+		if (onSuccess)
+		  onSuccess(count, items);
+	}
+	
+	function handleError() {
+		++requestFailureCount;
+		window.clearTimeout(abortTimerId);
+		if (onError)
+		  onError();
+	}
+
+	try {
+		xhr.onreadystatechange = function(){
+		  if (xhr.readyState != 4)
+			return;
+		
+		  if (xhr.responseXML) {
+			var xmlDoc = xhr.responseXML;
+			var fullCountSet = xmlDoc.evaluate("/gmail:feed/gmail:fullcount",
+				xmlDoc, gmailNSResolver, XPathResult.ANY_TYPE, null);
+			var fullCountNode = fullCountSet.iterateNext();
+			if (fullCountNode) {
+			  var entrySet = xmlDoc.evaluate("/gmail:feed/gmail:entry",
+				  xmlDoc, gmailNSResolver, XPathResult.ANY_TYPE, null);
+			  handleSuccess(fullCountNode.textContent, entrySet);
+			  return;
+			} else {
+			  console.error("Error: feed retrieved, but no <fullcount> node " +
+							"found");
+			}
+		  }
+		
+		  handleError();
+		}
+		
+		xhr.onerror = function(error) {
+		  handleError();
+		}
+		
+		xhr.open("GET", getFeedUrl(), true);
+		xhr.send(null);
+	} catch(e) {
+		console.error("exception: " + e);
+		handleError();
+	}
+}
+
+
+function gmailNSResolver(prefix) {
+	if(prefix == 'gmail') {
+		return 'http://purl.org/atom/ns#';
+	}
+}
+
+function updateUnreadCount(count) {
+	if (unreadCount != count) {
+		unreadCount = count;
+	}
+}
+
+
+function playNotificationSound() {
+	try {
+		notifyAlert.currentTime = 0;
+		notifyAlert.play();
+	} catch (ex) {
+		console.error(ex);
+	}
+}
+
+function getNotificationURL(item) {
+	var query = "";
+	for ( var key in item) {
+		var value = item[key];
+		if (value)
+			query += key + "=" + encodeURIComponent(value) + "&";
+	}
+
+	var notifyPageURL = chrome.extension.getURL("notify.html") + "?" + query;
+	return notifyPageURL;
+}
+
+Date.prototype.setISO8601 = function (string) {
+    var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
+        "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
+        "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
+    var d = string.match(new RegExp(regexp));
+
+    var offset = 0;
+    var date = new Date(d[1], 0, 1);
+
+    if (d[3]) { date.setMonth(d[3] - 1); }
+    if (d[5]) { date.setDate(d[5]); }
+    if (d[7]) { date.setHours(d[7]); }
+    if (d[8]) { date.setMinutes(d[8]); }
+    if (d[10]) { date.setSeconds(d[10]); }
+    if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
+    if (d[14]) {
+        offset = (Number(d[16]) * 60) + Number(d[17]);
+        offset *= ((d[15] == '-') ? 1 : -1);
+    }
+
+    offset -= date.getTimezoneOffset();
+    time = (Number(date) + (offset * 60 * 1000));
+    this.setTime(Number(time));
+}
+</script>
+</head>
+<body onload="init()">
+	<audio id="notifyAlert" src="sound/notify.mp3"></audio>
+</body>
+</html>
