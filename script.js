@@ -156,6 +156,16 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 
 		}
 		
+		if (response.o.contact) {
+			var w = $('#gbg').width();
+		
+			css+=".spContact, .spTask{position:absolute;display: block;padding: 0 6px;z-index:1002;color:#36C !important;line-height:31px;height:31px;margin-top:1px; cursor:pointer}";
+			css+=".spContact{right:"+(w+54)+"px}";
+			css+=".spTask{right:"+(w+5)+"px}";
+			
+			//css+="span.spContact:hover, span.spTask:hover{background:#EFF3FB}";
+		}
+		
 		// apply the css above on gmail
 		if (typeof GM_addStyle != "undefined") {
 			GM_addStyle(css);
@@ -174,85 +184,58 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			}
 		}
 		
-		// relocating contacts and tasks
-		var total = 0;
-		var interval = 250;
-		var max = 15000;
-		function init() {
-
-		var el = document.body.getElementsByTagName('b');
-		if (el && el.length && (el[0].innerHTML == 'Gmail' || el[0].innerHTML == 'Mail' || el[0].innerHTML == 'Google Mail' || el[0].innerHTML == 'E-Mail')) {
-				
-				if(response.o.contact){
-					alert('dude');
-				
-					header = document.body.getElementsByTagName('nobr');
-					contactLink = document.createElement('a');
-					contactLink.setAttribute('class','e');
-					contactLink.setAttribute('id','sp_contact');
-					
-//					$("div#\\:rm").click(function(){
-//						$("#sp_contact").text("Contacts");	
-//					});
-					
-//					cm =document.body.getElementsByClassName('.cM')[0];
-//					if(cm){
-//						contactLink.appendChild(document.createTextNode('Mail'));
-//					}else{
-//						contactLink.appendChild(document.createTextNode('Contacts'));
-//					}
-					var hash = location.hash;
-					if(hash.indexOf('contacts')!=-1){contactLink.appendChild(document.createTextNode('Mail'));}
-					else{contactLink.appendChild(document.createTextNode('Contacts'));}
-					contactLink.addEventListener('click', function() {
-						
-						var evt = document.createEvent("MouseEvents");
-						evt.initMouseEvent("click", true, true, window,
-						0, 0, 0, 0, 0, false, false, false, false, 0, null);
-						
-						if($(".cM").length){
-							$("#sp_contact").text('Contacts');
-							if($(".is").length){
-								$(".is")[0].dispatchEvent(evt);
-							}
-							//window.location="https://mail.google.com/mail/u/0/?shva=1#inbox";
-						}else{
-							$("#sp_contact").text('Mail');
-							var iel = $('div.CX.pp div.z9.ou')[0];
-							var ipa = $('div.qk span.p9.ou#\\:rd')[0];
-							var iop = $('div.qk span#\\:rf')[0];	
-							if(iel){iel.dispatchEvent(evt);}
-							else if(ipa){ipa.dispatchEvent(evt);}
-							else if(iop){iop.dispatchEvent(evt);}
-						}
-					},true);
+		if($(".cM").size()>0){
+			var html = 	'<span class="spContact">Mail</span>'+
+						'<span class="spTask">Tasks</span>';
+		}
+		else{
+			var html = 	'<span class="spContact">Contacts</span>'+
+						'<span class="spTask">Tasks</span>';
+		}
+		$('#gbg').before(html);
+		$('.spContact, .spTask').hover(
+			function(e){
+				$(this).addClass('spCh gbzt-hvr');
+			},
+			function(){
+				$(this).removeClass('spch gbzt-hvr');
+			}
+		);
 		
-					taskLink = document.createElement('a');
-					taskLink.setAttribute('class','e');
-					taskLink.setAttribute('id','sp_task');				
-					taskLink.appendChild(document.createTextNode('Tasks'));
-					taskLink.addEventListener('click', function() {
-						var evt = document.createEvent("MouseEvents");
-						evt.initMouseEvent("click", true, true, window,
-						0, 0, 0, 0, 0, false, false, false, false, 0, null);
-						var el = $('div.T4.pp div.T3')[0];
-						var pa = $('div.qk span#\\:re')[0];
-						if(el){el.dispatchEvent(evt);}
-						else if(pa){pa.dispatchEvent(evt);}
-					},true);
-					
-					header[1].insertBefore(document.createTextNode(' | '),header[1].firstChild);
-					header[1].insertBefore(contactLink,header[1].firstChild);
-					header[1].insertBefore(document.createTextNode(' | '),header[1].firstChild);
-					header[1].insertBefore(taskLink,header[1].firstChild);
+		$('.spContact').click(function(){
+			var evt = document.createEvent("MouseEvents");
+			evt.initMouseEvent("click", true, true, window,
+			0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				
+			if($(".cM").length){
+				$(".spContact").text('Contacts');
+				if($(".is").length){
+					$(".is")[0].dispatchEvent(evt);
+				}else{
+					window.location="https://mail.google.com/mail/u/0/?shva=1#inbox";
 				}
+			}else{
+				$(".spContact").text('Mail');
+				var iel = $('div.CX.pp div.z9.ou')[0];
+				var ipa = $('div.qk span.p9.ou#\\:rd')[0];
+				var iop = $('div.qk span#\\:rf')[0];	
+				if(iel){iel.dispatchEvent(evt);}
+				else if(ipa){ipa.dispatchEvent(evt);}
+				else if(iop){iop.dispatchEvent(evt);}
+			}
+			
+		});
 		
-		   } else {
-			   // try again in 250 more milliseconds (or whatever you set "interval" to above)
-			  window.setTimeout(init,interval);
-		   }
-		};
-		init();		
-	
+		$('.spTask').click(function(){
+			var evt = document.createEvent("MouseEvents");
+			evt.initMouseEvent("click", true, true, window,
+			0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			var el = $('div.T4.pp div.T3')[0];
+			var pa = $('div.qk span#\\:re')[0];
+			if(el){el.dispatchEvent(evt);}
+			else if(pa){pa.dispatchEvent(evt);}
+			
+		});
+			
 	});//end chrome extension request
 })();
