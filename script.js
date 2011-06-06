@@ -153,6 +153,7 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			css+="table img[title$=mov], table img[title$=MOV],table img[title$=m4v],table img[title$=mp4],table img[title$=M4V],table img[title$=MP4], table img[title$=avi], table img[title$=AVI], table img[title$=wmv], table img[title$=WMV],table img[title$=amv],table img[title$=AMV],table img[title$=mpeg],table img[title$=MPEG],table img[title$=mkv],table img[title$=MKV],table img[title$=flv], table img[title$=FLV]{ width:0px!important; height:0px!important; padding-left:16px!important; padding-top:16px!important;background-position: top left !important;background-image: url(data:image/gif;base64,R0lGODlhEAAQALMAAAAAAP///4SEhFRba8bGxjxYk0FZjFpbX0dZgU1bdkJalE9acv///wAAAAAAAAAAACH5BAEHAAwALAAAAAAQABAAAARJkElBq5WYicA7F0CmeR4VYhvJAew5csZBEm4aFMXg0WiHF4kOb+L7ITjD182IrBULC6GTg9NJezDZbqpqYruBpIBALpvFrbQ6AgA7) !important;}";
 				
 			css+="table img[title$=txt] { width:0px!important; height:0px!important; padding-left:16px!important; padding-top:16px!important;background-position: top left !important;background-image: url(https://mail.google.com/mail/u/0/images/txt.gif)!important;}";
+			
 
 		}
 		
@@ -164,6 +165,8 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			css+=".spTask{right:"+(w+5)+"px}";
 			
 			//css+="span.spContact:hover, span.spTask:hover{background:#EFF3FB}";
+			
+//			css+="html.cQ{overflow-y:hidden !important}";
 		}
 		
 		// apply the css above on gmail
@@ -236,6 +239,43 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			else if(pa){pa.dispatchEvent(evt);}
 			
 		});
+		$('html.cQ').css({
+			'overflow-y':'auto',
+			'height':'39%',
+			'width':'39%'
+		});
+		
+		setTimeout(function(){
+			$(window).css({
+				'height':'99%',
+				'width':'99%'
+			});		
+			$(window).css({
+				'height':'100%',
+				'width':'100%'
+			});
+		
+		},500);
+
+		
+//		$('html.cQ').css({
+//			'height':'100%',
+//			'width':'100%'
+//		});
+		
+		
+			var wh = $('body:eq(0)').height();
+			var rh = parseInt(wh)-300;
+			$('div.Cp').css({
+				'height': rh + 'px',
+				'overflow-x':'hidden'
+			});
 			
+		
+		
+		
+//		alert(window[0].innerHeight);
+//		if($('div.Cp').length){alert('de');}
+
 	});//end chrome extension request
 })();
