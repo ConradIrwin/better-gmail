@@ -167,6 +167,47 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			//css+="span.spContact:hover, span.spTask:hover{background:#EFF3FB}";
 			
 //			css+="html.cQ{overflow-y:hidden !important}";
+			if($(".cM").size()>0){
+				var html = 	'<span class="spContact">Mail</span>'+
+							'<span class="spTask">Tasks</span>';
+			}
+			else{
+				var html = 	'<span class="spContact">Contacts</span>'+
+							'<span class="spTask">Tasks</span>';
+			}
+			$('#gbg').before(html);
+			$('.spContact, .spTask').hover(
+				function(e){
+					$(this).addClass('spCh gbzt-hvr');
+				},
+				function(){
+					$(this).removeClass('spch gbzt-hvr');
+				}
+			);
+			
+			$('.spContact').click(function(){
+				var evt = document.createEvent("MouseEvents");
+				evt.initMouseEvent("click", true, true, window,
+				0, 0, 0, 0, 0, false, false, false, false, 0, null);
+					
+				if($(".cM").length){
+					$(".spContact").text('Contacts');
+					if($(".is").length){
+						$(".is")[0].dispatchEvent(evt);
+					}else{
+						window.location="https://mail.google.com/mail/u/0/?shva=1#inbox";
+					}
+				}else{
+					$(".spContact").text('Mail');
+					var iel = $('div.CX.pp div.z9.ou')[0];
+					var ipa = $('div.qk span.p9.ou#\\:rd')[0];
+					var iop = $('div.qk span#\\:rf')[0];	
+					if(iel){iel.dispatchEvent(evt);}
+					else if(ipa){ipa.dispatchEvent(evt);}
+					else if(iop){iop.dispatchEvent(evt);}
+				}
+				
+			});
 		}
 		
 		// apply the css above on gmail
@@ -187,47 +228,7 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			}
 		}
 		
-		if($(".cM").size()>0){
-			var html = 	'<span class="spContact">Mail</span>'+
-						'<span class="spTask">Tasks</span>';
-		}
-		else{
-			var html = 	'<span class="spContact">Contacts</span>'+
-						'<span class="spTask">Tasks</span>';
-		}
-		$('#gbg').before(html);
-		$('.spContact, .spTask').hover(
-			function(e){
-				$(this).addClass('spCh gbzt-hvr');
-			},
-			function(){
-				$(this).removeClass('spch gbzt-hvr');
-			}
-		);
-		
-		$('.spContact').click(function(){
-			var evt = document.createEvent("MouseEvents");
-			evt.initMouseEvent("click", true, true, window,
-			0, 0, 0, 0, 0, false, false, false, false, 0, null);
-				
-			if($(".cM").length){
-				$(".spContact").text('Contacts');
-				if($(".is").length){
-					$(".is")[0].dispatchEvent(evt);
-				}else{
-					window.location="https://mail.google.com/mail/u/0/?shva=1#inbox";
-				}
-			}else{
-				$(".spContact").text('Mail');
-				var iel = $('div.CX.pp div.z9.ou')[0];
-				var ipa = $('div.qk span.p9.ou#\\:rd')[0];
-				var iop = $('div.qk span#\\:rf')[0];	
-				if(iel){iel.dispatchEvent(evt);}
-				else if(ipa){ipa.dispatchEvent(evt);}
-				else if(iop){iop.dispatchEvent(evt);}
-			}
-			
-		});
+
 		
 		$('.spTask').click(function(){
 			var evt = document.createEvent("MouseEvents");
@@ -239,23 +240,23 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 			else if(pa){pa.dispatchEvent(evt);}
 			
 		});
-		$('html.cQ').css({
-			'overflow-y':'auto',
-			'height':'39%',
-			'width':'39%'
-		});
-		
-		setTimeout(function(){
-			$(window).css({
-				'height':'99%',
-				'width':'99%'
-			});		
-			$(window).css({
-				'height':'100%',
-				'width':'100%'
-			});
-		
-		},500);
+				//		$('html.cQ').css({
+				//			'overflow-y':'auto',
+				//			'height':'39%',
+				//			'width':'39%'
+				//		});
+				//		
+				//		setTimeout(function(){
+				//			$(window).css({
+				//				'height':'99%',
+				//				'width':'99%'
+				//			});		
+				//			$(window).css({
+				//				'height':'100%',
+				//				'width':'100%'
+				//			});
+				//		
+				//		},500);
 
 		
 //		$('html.cQ').css({
@@ -263,13 +264,13 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 //			'width':'100%'
 //		});
 		
-		
-			var wh = $('body:eq(0)').height();
-			var rh = parseInt(wh)-300;
-			$('div.Cp').css({
-				'height': rh + 'px',
-				'overflow-x':'hidden'
-			});
+							//in progresss
+				//			var wh = $('body:eq(0)').height();
+				//			var rh = parseInt(wh)-300;
+				//			$('div.Cp').css({
+				//				'height': rh + 'px',
+				//				'overflow-x':'hidden'
+				//			});
 			
 		
 		
