@@ -20,5 +20,5 @@
    "options_page": "options.html",
    "permissions": [ "tabs", "http://*.google.com/", "https://*.google.com/", "notifications" ],
    "update_url": "http://clients2.google.com/service/update2/crx",
-   "version": "2.7"
+   "version": "2.7.1"
 }
