@@ -158,30 +158,26 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 		}
 		
 		if (response.o.contact) {
-			var w = $('#gbg').width();
-		
-			css+=".spContact, .spTask{position:absolute;display: block;padding: 0 6px;z-index:1002;color:#36C !important;line-height:31px;height:31px;margin-top:1px; cursor:pointer}";
-			css+=".spContact{right:"+(w+54)+"px}";
-			css+=".spTask{right:"+(w+5)+"px}";
-			
-			//css+="span.spContact:hover, span.spTask:hover{background:#EFF3FB}";
-			
-//			css+="html.cQ{overflow-y:hidden !important}";
+			css+=".spContact, .spTask{padding: 0px 6px;}";
+
 			if($(".cM").size()>0){
-				var html = 	'<span class="spContact">Mail</span>'+
-							'<span class="spTask">Tasks</span>';
+				var label = 'Mail';
+			} else {
+				var label = 'Calendar';
 			}
-			else{
-				var html = 	'<span class="spContact">Contacts</span>'+
-							'<span class="spTask">Tasks</span>';
-			}
-			$('#gbg').before(html);
-			$('.spContact, .spTask').hover(
+
+			var html = '<li class="gbt"><a class="gbgt spA"><span class="gbtb2"></span>'
+					   '<span class="gbts spContact"><span>' + label + '</span></span></a></li>'+
+					   '<li class="gbt"><a class="gbgt spA"><span class="gbtb2"></span>' +
+					   '<span class="gbts spTask"><span>Tasks</span></span></a></li>';
+
+			$('#gb #gbg .gbtc').prepend(html);
+			$('.spA').hover(
 				function(e){
-					$(this).addClass('spCh gbzt-hvr');
+					$(this).addClass('gbzt-hvr');
 				},
 				function(){
-					$(this).removeClass('spch gbzt-hvr');
+					$(this).removeClass('gbzt-hvr');
 				}
 			);
 			
