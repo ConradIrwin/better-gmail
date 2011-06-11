@@ -166,7 +166,7 @@ css += "div.hQfrn, .OH0apf { display: none !important; }";
 				var label = 'Calendar';
 			}
 
-			var html = '<li class="gbt"><a class="gbgt spA"><span class="gbtb2"></span>'
+			var html = '<li class="gbt"><a class="gbgt spA"><span class="gbtb2"></span>' +
 					   '<span class="gbts spContact"><span>' + label + '</span></span></a></li>'+
 					   '<li class="gbt"><a class="gbgt spA"><span class="gbtb2"></span>' +
 					   '<span class="gbts spTask"><span>Tasks</span></span></a></li>';
